@@ -12,8 +12,10 @@ steps:
     versionSpec: '8.x'
   displayName: 'Install Node.js'
 
-- script: export foo="bar" && echo $foo
+- script: export foo="bar" && echo $foo && echo $(variables.Example)
   displayName: 'env'
+  env:
+    Example: 'myValue'
 
 - script: yarn
   displayName: 'yarn'
