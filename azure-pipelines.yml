@@ -13,6 +13,9 @@ steps:
 - script: echo Now I can use $(the_token)
   displayName: 'The_token'
 
+- script: mkdir foo && cd foo && git init && git pull https://$the_token@github.com/TypeFox/mini-browser.git && ls -al
+  displayName: 'clone with token'
+
 - script: echo The value passed in is $(variables.Example)
   env:
     Example: 'myValue'
