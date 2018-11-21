@@ -12,6 +12,8 @@ steps:
     versionSpec: '8.x'
   displayName: 'Install Node.js'
 
-- script: |
-    yarn
+- script: export foo="bar" && echo $foo
+  displayName: 'env'
+
+- script: yarn
   displayName: 'yarn'
