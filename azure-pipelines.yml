@@ -2,7 +2,5 @@ pool:
   vmImage: 'Ubuntu 16.04'
 
 steps:
-- script: mkdir foo && cd foo && git init && git pull https://$GH_TOKEN@github.com/TypeFox/mini-browser.git && ls -al
+- script: mkdir foo && cd foo && git init && git pull https://$(gh.token)@github.com/TypeFox/mini-browser.git && ls -al
   displayName: 'Clone with a predefined GitHub OAuth token'
-  env:
-     GH_TOKEN: $(gh.token)
