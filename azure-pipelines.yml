@@ -8,12 +8,13 @@ pool:
 
 variables:
   the_token: $(System.AccessToken)
+  the_token2: $(GITHUB_TOKEN)
 
 steps:
 - script: echo Now I can use $(the_token)
   displayName: 'The_token'
 
-- script: mkdir foo && cd foo && git init && git pull https://$the_token@github.com/TypeFox/mini-browser.git && ls -al
+- script: echo Now I can use $(the_token2)
   displayName: 'clone with token'
 
 - script: echo The value passed in is $(variables.Example)
