@@ -1,11 +1,7 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
 pool:
   vmImage: 'Ubuntu 16.04'
 
+steps:
 - script: mkdir foo && cd foo && git init && git pull https://$GH_TOKEN@github.com/TypeFox/mini-browser.git && ls -al
   displayName: 'Clone with a predefined GitHub OAuth token'
   env:
