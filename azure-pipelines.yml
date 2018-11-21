@@ -12,7 +12,6 @@ steps:
     versionSpec: '8.x'
   displayName: 'Install Node.js'
 
-steps:
 - script: echo The value passed in is $(variables.Example)
   env:
     Example: 'myValue'
