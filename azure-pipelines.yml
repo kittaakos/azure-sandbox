@@ -16,7 +16,7 @@ steps:
 - script: echo Now I can use $(foo)
   displayName: 'clone with token'
   env:
-     foo: ${GH_TOKEN}
+     foo: ${gh.token}
 
 - script: echo The value passed in is $(variables.Example)
   env:
