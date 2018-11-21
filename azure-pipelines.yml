@@ -6,19 +6,7 @@
 pool:
   vmImage: 'Ubuntu 16.04'
 
-variables:
-  the_token: $(System.AccessToken)
-
-steps:
-- script: echo Now I can use $(the_token)
-  displayName: 'The_token'
-
-- script: mkdir foo && cd foo && git init && git pull https://$foo@github.com/TypeFox/mini-browser.git && ls -al
-  displayName: 'clone with token'
+- script: mkdir foo && cd foo && git init && git pull https://$GH_TOKEN@github.com/TypeFox/mini-browser.git && ls -al
+  displayName: 'Clone with a predefined GitHub OAuth token'
   env:
-     foo: $(gh.token)
-
-- script: echo The value passed in is $(variables.Example)
-  env:
-    Example: 'myValue'
-  displayName: 'Run cross-platform scripts (example)'
+     GH_TOKEN: $(gh.token)
