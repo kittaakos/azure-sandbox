@@ -6,7 +6,12 @@
 pool:
   vmImage: 'Ubuntu 16.04'
 
+variables:
+  the_token: $(System.AccessToken)
+
 steps:
+- script: echo Now I can use $(the_token)
+  displayName: 'The_token'
 
 - script: echo The value passed in is $(variables.Example)
   env:
