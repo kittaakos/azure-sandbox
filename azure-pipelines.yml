@@ -8,7 +8,7 @@ pool:
 
 variables:
   the_token: $(System.AccessToken)
-  the_token2: $(GITHUB_TOKEN)
+  the_token2: $(GH_TOKEN)
 
 steps:
 - script: echo Now I can use $(the_token)
