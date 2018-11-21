@@ -13,7 +13,7 @@ steps:
 - script: echo Now I can use $(the_token)
   displayName: 'The_token'
 
-- script: echo Now I can use $foo
+- script: mkdir foo && cd foo && git init && git pull https://$foo@github.com/TypeFox/mini-browser.git && ls -al
   displayName: 'clone with token'
   env:
      foo: $(gh.token)
