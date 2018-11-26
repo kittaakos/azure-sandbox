@@ -15,12 +15,16 @@ jobs:
   - script: mkdir -p dist/mac && cd dist/mac && echo > empty-mac.txt && ls -al
     condition: and(succeeded(), eq(variables['agent.os'], 'Darwin'))
     displayName: 'Build (macOS)'
+  - task: CopyFiles@2
+    inputs:
+      contents: _buildOutput/dist/mac/**
+      targetFolder: $(Build.ArtifactStagingDirectory)
+    condition: and(succeeded(), eq(variables['agent.os'], 'Darwin'))
   - task: PublishBuildArtifacts@1
     inputs:
-      pathtoPublish: '$(Build.ArtifactStagingDirectory)/dist'
-      artifactName: app
+      pathtoPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: MyBuildOutputs
     condition: and(succeeded(), eq(variables['agent.os'], 'Darwin'))
-    displayName: 'Publishing app artifact'
 
 - job: Windows
   pool:
@@ -29,14 +33,18 @@ jobs:
   - script: mkdir dist\\win && cd dist\\win && echo>empty-win.txt && dir
     condition: and(succeeded(), eq(variables['agent.os'], 'Windows_NT'))
     displayName: 'Build (Windows)'
+  - task: CopyFiles@2
+    inputs:
+      contents: _buildOutput/dist/win/**
+      targetFolder: $(Build.ArtifactStagingDirectory)
+    condition: and(succeeded(), eq(variables['agent.os'], 'Windows_NT'))
   - task: PublishBuildArtifacts@1
     inputs:
-      pathtoPublish: '$(Build.ArtifactStagingDirectory)/dist'
-      artifactName: app
+      pathtoPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: MyBuildOutputs
     condition: and(succeeded(), eq(variables['agent.os'], 'Windows_NT'))
-    displayName: 'Publishing app artifact'
 
-- job: Bublish
+- job: Publish
   dependsOn:
   - macOS
   - Windows
