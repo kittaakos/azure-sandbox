@@ -16,7 +16,7 @@ jobs:
     displayName: 'Dummy Build'
   - task: PublishBuildArtifacts@1
     inputs:
-      pathtoPublish: _build/default/dist/mac/empty-mac.txt
+      pathtoPublish: /dist/mac/empty-mac.txt
       artifactName: 'empty-mac.txt'
     displayName: 'Publis Build'
 
@@ -28,7 +28,7 @@ jobs:
     displayName: 'Dummy Build'
   - task: PublishBuildArtifacts@1
     inputs:
-      pathtoPublish: _build/default/dist/win/empty-win.txt
+      pathtoPublish: /dist/win/empty-win.txt
       artifactName: 'empty-win.txt'
 
 # - job: Publish
