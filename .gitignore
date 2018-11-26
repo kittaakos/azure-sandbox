@@ -62,3 +62,6 @@ typings/
 
 # tsc output
 lib
+
+# location of the dummy build step
+dist
