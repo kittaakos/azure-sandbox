@@ -13,47 +13,34 @@ jobs:
     vmImage: 'macOS-10.13'
   steps:
   - script: mkdir -p dist/mac && cd dist/mac && echo > empty-mac.txt && ls -al
-    condition: and(succeeded(), eq(variables['agent.os'], 'Darwin'))
-    displayName: 'Build (macOS)'
-  - task: CopyFiles@2
-    inputs:
-      contents: empty-mac.txt
-      targetFolder: $(Build.SourcesDirectory)/dist/mac
-    condition: and(succeeded(), eq(variables['agent.os'], 'Darwin'))
+    displayName: 'Dummy Build'
   - task: PublishBuildArtifacts@1
     inputs:
-      pathtoPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: MyBuildOutputs
-    condition: and(succeeded(), eq(variables['agent.os'], 'Darwin'))
+      pathtoPublish: $(Build.ArtifactStagingDirectory)/dist/mac/empty-mac.txt
+      artifactName: 'empty-mac.txt'
+    displayName: 'Publis Build'
 
 - job: Windows
   pool:
     vmImage: 'vs2017-win2016'
   steps:
   - script: mkdir dist\\win && cd dist\\win && echo>empty-win.txt && dir
-    condition: and(succeeded(), eq(variables['agent.os'], 'Windows_NT'))
-    displayName: 'Build (Windows)'
-  - task: CopyFiles@2
-    inputs:
-      contents: empty-win.txt
-      targetFolder: $(Build.SourcesDirectory)/dist/win
-    condition: and(succeeded(), eq(variables['agent.os'], 'Windows_NT'))
+    displayName: 'Dummy Build'
   - task: PublishBuildArtifacts@1
     inputs:
-      pathtoPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: MyBuildOutputs
-    condition: and(succeeded(), eq(variables['agent.os'], 'Windows_NT'))
+      pathtoPublish: $(Build.ArtifactStagingDirectory)/dist/win/empty-win.txt
+      artifactName: 'empty-win.txt'
 
-- job: Publish
-  dependsOn:
-  - macOS
-  - Windows
-  condition: succeeded()
-  pool:
-    vmImage: 'Ubuntu 16.04'
-  steps:
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish end to end test artifact'
-    inputs:
-      pathtoPublish: '$(Build.ArtifactStagingDirectory)/dist'
-      artifactName: dist
+# - job: Publish
+#   dependsOn:
+#   - macOS
+#   - Windows
+#   condition: succeeded()
+#   pool:
+#     vmImage: 'Ubuntu 16.04'
+#   steps:
+#   - task: PublishBuildArtifacts@1
+#     displayName: 'Publish end to end test artifact'
+#     inputs:
+#       pathtoPublish: '$(Build.ArtifactStagingDirectory)/dist'
+#       artifactName: dist
