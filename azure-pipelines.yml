@@ -12,14 +12,40 @@ jobs:
   pool:
     vmImage: 'macOS-10.13'
   steps:
-  - script: mkdir -p dist/mac && cd dist/mac && echo > empty-mac-$(Release.DefinitionId).txt && ls -al
+  - script: mkdir -p dist/mac && cd dist/mac && echo > empty-mac.txt && ls -al
     condition: and(succeeded(), eq(variables['agent.os'], 'Darwin'))
     displayName: 'Build (macOS)'
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)/dist'
+      artifactName: app
+    condition: and(succeeded(), eq(variables['agent.os'], 'Darwin'))
+    displayName: 'Publishing app artifact'
 
 - job: Windows
   pool:
     vmImage: 'vs2017-win2016'
   steps:
-  - script: mkdir dist\\win && cd dist\\win && echo>empty-win-$(Release.DefinitionId).txt && dir
+  - script: mkdir dist\\win && cd dist\\win && echo>empty-win.txt && dir
     condition: and(succeeded(), eq(variables['agent.os'], 'Windows_NT'))
     displayName: 'Build (Windows)'
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)/dist'
+      artifactName: app
+    condition: and(succeeded(), eq(variables['agent.os'], 'Windows_NT'))
+    displayName: 'Publishing app artifact'
+
+- job: Bublish
+  dependsOn:
+  - macOS
+  - Windows
+  condition: succeeded()
+  pool:
+    vmImage: 'Ubuntu 16.04'
+  steps:
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish end to end test artifact'
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)/dist'
+      artifactName: dist
