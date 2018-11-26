@@ -12,7 +12,7 @@ jobs:
   pool:
     vmImage: 'macOS-10.13'
   steps:
-  - script: mkdir -p dist/mac && cd dist/mac && echo > empty-mac.txt && ls -al
+  - script: mkdir -p dist/mac && cd dist/mac && echo > empty-mac.txt && pwd && ls -al
     displayName: 'Dummy Build'
   - task: PublishBuildArtifacts@1
     inputs:
@@ -24,7 +24,7 @@ jobs:
   pool:
     vmImage: 'vs2017-win2016'
   steps:
-  - script: mkdir dist\\win && cd dist\\win && echo>empty-win.txt && dir
+  - script: mkdir dist\\win && cd dist\\win && echo>empty-win.txt && cd && dir
     displayName: 'Dummy Build'
   - task: PublishBuildArtifacts@1
     inputs:
