@@ -12,7 +12,7 @@ jobs:
   pool:
     vmImage: 'macOS-10.13'
   steps:
-  - script: mkdir -p dist/mac && cd dist/mac && echo > empty-mac.txt && ls -al
+  - script: mkdir -p dist/mac && cd dist/mac && echo > empty-mac-$(Release.DefinitionId).txt && ls -al
     condition: and(succeeded(), eq(variables['agent.os'], 'Darwin'))
     displayName: 'Build (macOS)'
 
@@ -20,6 +20,6 @@ jobs:
   pool:
     vmImage: 'vs2017-win2016'
   steps:
-  - script: mkdir dist\\win && cd dist\\win && echo>empty-win.txt && dir
-    condition: and(succeeded(), eq(variables['agent.os'], 'Winndows_NT'))
+  - script: mkdir dist\\win && cd dist\\win && echo>empty-win-$(Release.DefinitionId).txt && dir
+    condition: and(succeeded(), eq(variables['agent.os'], 'Windows_NT'))
     displayName: 'Build (Windows)'
