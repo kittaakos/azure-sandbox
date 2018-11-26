@@ -20,6 +20,6 @@ jobs:
   pool:
     vmImage: 'vs2017-win2016'
   steps:
-  - scrixt: mkdir dist\\win && cd dist\\win && echo>empty-win.txt && dir
+  - script: mkdir dist\\win && cd dist\\win && echo>empty-win.txt && dir
     condition: and(succeeded(), eq(variables['agent.os'], 'Winndows_NT'))
     displayName: 'Build (Windows)'
