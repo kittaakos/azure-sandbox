@@ -4,9 +4,6 @@ trigger:
     include:
     - master
 
-pr:
-- master
-
 jobs:
 - job: macOS
   pool:
@@ -16,31 +13,6 @@ jobs:
     displayName: 'Dummy Build'
   - task: PublishBuildArtifacts@1
     inputs:
-      pathtoPublish: dist/mac/empty-mac.txt
-      artifactName: 'empty-mac.txt'
+      pathtoPublish: dist/mac/empty-mac.zip
+      artifactName: 'empty-mac.zip'
     displayName: 'Publis Build'
-
-- job: Windows
-  pool:
-    vmImage: 'vs2017-win2016'
-  steps:
-  - script: mkdir dist\\win && cd dist\\win && echo > empty-win.txt
-    displayName: 'Dummy Build'
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathtoPublish: dist/win/empty-win.txt
-      artifactName: 'empty-win.txt'
-
-# - job: Publish
-#   dependsOn:
-#   - macOS
-#   - Windows
-#   condition: succeeded()
-#   pool:
-#     vmImage: 'Ubuntu 16.04'
-#   steps:
-#   - task: PublishBuildArtifacts@1
-#     displayName: 'Publish end to end test artifact'
-#     inputs:
-#       pathtoPublish: '$(Build.ArtifactStagingDirectory)/dist'
-#       artifactName: dist
