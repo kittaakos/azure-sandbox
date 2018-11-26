@@ -17,8 +17,8 @@ jobs:
     displayName: 'Build (macOS)'
   - task: CopyFiles@2
     inputs:
-      contents: _buildOutput/dist/mac/**
-      targetFolder: $(Build.ArtifactStagingDirectory)
+      contents: empty-mac.txt
+      targetFolder: $(Build.SourcesDirectory)/dist/mac
     condition: and(succeeded(), eq(variables['agent.os'], 'Darwin'))
   - task: PublishBuildArtifacts@1
     inputs:
@@ -35,8 +35,8 @@ jobs:
     displayName: 'Build (Windows)'
   - task: CopyFiles@2
     inputs:
-      contents: _buildOutput/dist/win/**
-      targetFolder: $(Build.ArtifactStagingDirectory)
+      contents: empty-win.txt
+      targetFolder: $(Build.SourcesDirectory)/dist/win
     condition: and(succeeded(), eq(variables['agent.os'], 'Windows_NT'))
   - task: PublishBuildArtifacts@1
     inputs:
