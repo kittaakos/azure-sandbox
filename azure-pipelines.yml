@@ -16,7 +16,7 @@ jobs:
       archiveFilePatterns: 'dist/mac/empty-mac.zip' 
       destinationFolder: dist/mac/
       cleanDestinationFolder: true 
-    displayName: 'Unzipping arhive - Workaround for https://github.com/Microsoft/azure-pipelines-agent/issues/1986'
+    displayName: 'Unzipping Build Artifact - Workaround for https://github.com/Microsoft/azure-pipelines-agent/issues/1986'
   - task: PublishBuildArtifacts@1
     inputs:
       pathtoPublish: dist/mac/empty-mac
