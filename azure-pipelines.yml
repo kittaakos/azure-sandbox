@@ -9,7 +9,7 @@ jobs:
   pool:
     vmImage: 'macOS-10.13'
   steps:
-  - script: mkdir -p dist/mac && cd dist/mac && echo > empty-mac.txt
+  - script: mkdir -p dist/mac && cd dist/mac && echo > empty-mac.txt && zip empty-mac.zip empty-mac.txt
     displayName: 'Dummy Build'
   - task: PublishBuildArtifacts@1
     inputs:
