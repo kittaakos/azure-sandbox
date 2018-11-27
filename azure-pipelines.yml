@@ -13,7 +13,7 @@ jobs:
     displayName: 'Dummy Build - Let assume this is a blackbox and it always produces a ZIP.'
   - task: ExtractFiles@1
     inputs:
-      archiveFilePatterns: 'dsit/mac/empty-mac.zip' 
+      archiveFilePatterns: 'dist/mac/empty-mac.zip' 
       destinationFolder: dist/mac/
       cleanDestinationFolder: true 
     displayName: 'Unzipping arhive - Workaround for https://github.com/Microsoft/azure-pipelines-agent/issues/1986'
