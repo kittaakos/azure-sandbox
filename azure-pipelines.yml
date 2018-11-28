@@ -9,16 +9,12 @@ jobs:
   pool:
     vmImage: 'macOS-10.13'
   steps:
-  - bash: export BUILD_NUMBER=$(git rev-parse --short HEAD)
-    displayName: 'Set the BUILD_NUMBER'
-  - script: echo The buld number is $(BUILD_NUMBER).
-    displayName: 'Get the BUILD_NUMBER'
+  - bash: export BUILD_NUMBER=$(git rev-parse --short HEAD) && echo The buld number is $BUILD_NUMBER
+    displayName: 'Set and get the BUILD_NUMBER'
 
 - job: Windows
   pool:
     vmImage: 'vs2017-win2016'
   steps:
-  - powershell: $env:BUILD_NUMBER=$(git rev-parse --short HEAD)
-    displayName: 'Set the BUILD_NUMBER'
-  - script: echo The buld number is $(BUILD_NUMBER).
-    displayName: 'Get the BUILD_NUMBER'
+  - powershell: $env:BUILD_NUMBER=$(git rev-parse --short HEAD) && echo The build number is $BUILD_NUMBER
+    displayName: 'Set and get the BUILD_NUMBER'
