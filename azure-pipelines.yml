@@ -11,7 +11,7 @@ jobs:
   steps:
   - bash: export BUILD_NUMBER=$(git rev-parse --short HEAD)
     displayName: 'Set the BUILD_NUMBER'
-  - script: echo The buld number is $BUILD_NUMBER.
+  - script: echo The buld number is $(BUILD_NUMBER).
     displayName: 'Get the BUILD_NUMBER'
 
 - job: Windows
@@ -20,5 +20,5 @@ jobs:
   steps:
   - powershell: $env:BUILD_NUMBER=$(git rev-parse --short HEAD)
     displayName: 'Set the BUILD_NUMBER'
-  - script: echo The buld number is $BUILD_NUMBER.
+  - script: echo The buld number is $(BUILD_NUMBER).
     displayName: 'Get the BUILD_NUMBER'
