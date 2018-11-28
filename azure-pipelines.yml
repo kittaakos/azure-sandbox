@@ -9,16 +9,16 @@ jobs:
   pool:
     vmImage: 'macOS-10.13'
   steps:
-  - script: mkdir -p dist/mac && cd dist/mac && echo > empty-mac.txt && zip empty-mac.zip empty-mac.txt
-    displayName: 'Dummy Build - Let assume this is a blackbox and it always produces a ZIP.'
-  - task: ExtractFiles@1
-    inputs:
-      archiveFilePatterns: 'dist/mac/empty-mac.zip' 
-      destinationFolder: dist/mac/empty-mac
-      cleanDestinationFolder: true 
-    displayName: 'Unzipping Build Artifact - Workaround for https://github.com/Microsoft/azure-pipelines-agent/issues/1986'
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathtoPublish: dist/mac/empty-mac
-      artifactName: 'empty-mac'
-    displayName: 'Publis Build'
+  - bash: export BUILD_NUMBER=$(git rev-parse --short HEAD)
+    displayName: 'Set the BUILD_NUMBER'
+  - script: echo The buld number is $BUILD_NUMBER.
+    displayName: 'Get the BUILD_NUMBER'
+
+- job: macOS
+  pool:
+    vmImage: 'vs2017-win2016'
+  steps:
+  - powershell: $env:BUILD_NUMBER=$(git rev-parse --short HEAD)
+    displayName: 'Set the BUILD_NUMBER'
+  - script: echo The buld number is $BUILD_NUMBER.
+    displayName: 'Get the BUILD_NUMBER'
