@@ -23,7 +23,9 @@ jobs:
       Set-Variable -Name IPADDR -Value (Get-NetIPAddress | ?{ $_.AddressFamily -eq "IPv4" -and !($_.IPAddress -match "169") -and !($_.IPaddress -match "127") }).IPAddress
       Write-Host "##vso[task.setvariable variable=IP_ADDR]$IPADDR"
   - script: |
-      echo The IP address is $IP_ADDR on Windows.
+      echo The IP address is %IP_ADDR% on Windows. [CMD.exe]
+  - powershell: |
+      echo The IP address is $IP_ADDR on Windows [PowerShell].
 
 - job: Linux
   pool:
