@@ -25,7 +25,7 @@ jobs:
   - script: |
       echo The IP address is %IP_ADDR% on Windows. [CMD.exe]
   - powershell: |
-      echo The IP address is $IP_ADDR on Windows [PowerShell].
+      echo The IP address is $IP_ADDR on Windows. [PowerShell]
 
 - job: Linux
   pool:
