@@ -12,8 +12,10 @@ jobs:
   - script: |
       export BUILD_NUMBER=$(git rev-parse --short HEAD)
       echo "##vso[task.setvariable variable=myVariable]$BUILD_NUMBER"
-      echo my variable is $(myVariable) [!!! This is still empty here.]
-      echo my variable is $BUILD_NUMBER
+    displayName: Figure out the build number
+  - script: |
+      echo my variable is $(myVariable)  # now this will be set
+      echo my variable is $BUILD_NUMBER  # this one WON'T be set anymore, as we're in a new process
       mkdir -p dist/mac && cd dist/mac && echo "on mac" > mac-$(myVariable).txt && ls -al
     displayName: 'Dummy Build (macOS)'
 
@@ -24,7 +26,7 @@ jobs:
   - script: |
       git rev-parse --short HEAD > tmp.txt
       set /p BUILD_NUMBER=< tmp.txt
-      echo "##vso[task.setvariable variable=myVariable]%BUILD_NUMBER%"
+      echo '##vso[task.setvariable variable=myVariable]%BUILD_NUMBER%''
       echo my variable is $(myVariable) [!!! This is still empty here.]
       echo my variable is %BUILD_NUMBER%
       mkdir dist\\win && cd dist\\win && echo "on windows" > win-$(myVariable).txt && dir
@@ -36,7 +38,7 @@ jobs:
   steps:
   - script: |
       export BUILD_NUMBER=$(git rev-parse --short HEAD)
-      echo "##vso[task.setvariable variable=myVariable]$BUILD_NUMBER"
+      echo '##vso[task.setvariable variable=myVariable]$BUILD_NUMBER'
       echo my variable is $(myVariable) [!!! This is still empty here.]
       echo my variable is $BUILD_NUMBER
       mkdir -p dist/linux && cd dist/linux && echo "on linux" > linux-$(myVariable).txt && ls -al
