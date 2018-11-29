@@ -10,19 +10,19 @@ jobs:
     vmImage: 'macOS-10.13'
 
   variables:
-    aKey: 'aValue'
+    aKey: 'commitsh'
 
   steps:
-  - script: mkdir -p dist/mac && cd dist/mac && echo > empty-mac.txt && zip empty-mac-$(aKey).zip empty-mac.txt
+  - script: mkdir -p dist/mac && cd dist/mac && echo > empty-mac.txt && zip empty-mac-0.0.0.$(aKey).zip empty-mac.txt
     displayName: 'Dummy Build - Let assume this is a blackbox and it always produces a ZIP.'
   - task: ExtractFiles@1
     inputs:
       archiveFilePatterns: 'dist/mac/*.zip' 
-      destinationFolder: dist/mac/empty-mac-$(aKey)
+      destinationFolder: dist/mac/empty-mac-0.0.0.$(aKey)
       cleanDestinationFolder: true 
     displayName: 'Unzipping Build Artifact - Workaround for https://github.com/Microsoft/azure-pipelines-agent/issues/1986'
   - task: PublishBuildArtifacts@1
     inputs:
-      pathtoPublish: dist/mac/empty-mac-$(aKey)
-      artifactName: 'empty-mac-$(aKey)'
+      pathtoPublish: dist/mac/empty-mac-0.0.0.$(aKey)
+      artifactName: 'empty-mac-0.0.0.$(aKey)'
     displayName: 'Publis Build'
