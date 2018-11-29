@@ -26,7 +26,7 @@ jobs:
     condition: eq( variables['agent.os'], 'Windows_NT' )
   # now we use the value, no matter where we got it
   - script: |
-      echo The IP address is $(variables.IP_ADDR)
+      echo The IP address is $variables.IP_ADDR
 
 - job: Windows
   pool:
@@ -49,4 +49,4 @@ jobs:
     condition: eq( variables['agent.os'], 'Windows_NT' )
   # now we use the value, no matter where we got it
   - script: |
-      echo The IP address is $(variables.IP_ADDR)
+      echo The IP address is $variables.IP_ADDR
