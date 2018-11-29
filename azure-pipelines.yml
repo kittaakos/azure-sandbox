@@ -24,10 +24,9 @@ jobs:
       Set-Variable -Name IPADDR -Value (Get-NetIPAddress | ?{ $_.AddressFamily -eq "IPv4" -and !($_.IPAddress -match "169") -and !($_.IPaddress -match "127") }).IPAddress
       Write-Host ##vso[task.setvariable variable=IP_ADDR]$env:IPADDR
     condition: eq( variables.Agent.OS, 'Windows_NT' )
-
-# now we use the value, no matter where we got it
-- script: |
-    echo The IP address is $(variables.IP_ADDR)
+  # now we use the value, no matter where we got it
+  - script: |
+      echo The IP address is $(variables.IP_ADDR)
 
 - job: Windows
   pool:
@@ -48,3 +47,6 @@ jobs:
       Set-Variable -Name IPADDR -Value (Get-NetIPAddress | ?{ $_.AddressFamily -eq "IPv4" -and !($_.IPAddress -match "169") -and !($_.IPaddress -match "127") }).IPAddress
       Write-Host ##vso[task.setvariable variable=IP_ADDR]$env:IPADDR
     condition: eq( variables.Agent.OS, 'Windows_NT' )
+  # now we use the value, no matter where we got it
+  - script: |
+      echo The IP address is $(variables.IP_ADDR)
