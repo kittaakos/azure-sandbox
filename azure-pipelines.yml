@@ -33,9 +33,9 @@ jobs:
     vmImage: 'ubuntu-16.04'
   steps:
   - script: |
-    export BUILD_NUMBER=$(git rev-parse --short HEAD)
-    echo '##vso[task.setvariable variable=myVariable]$BUILD_NUMBER'
-    echo my variable is $(myVariable)
-    echo my variable is $BUILD_NUMBER
-    mkdir dist/linux && cd dist/linux && echo "on linux" > linux-$(myVariable).txt && ls -al
+      export BUILD_NUMBER=$(git rev-parse --short HEAD)
+      echo '##vso[task.setvariable variable=myVariable]$BUILD_NUMBER'
+      echo my variable is $(myVariable)
+      echo my variable is $BUILD_NUMBER
+      mkdir dist/linux && cd dist/linux && echo "on linux" > linux-$(myVariable).txt && ls -al
     displayName: 'Dummy Build (Linux)'
