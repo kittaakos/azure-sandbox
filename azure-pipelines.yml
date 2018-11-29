@@ -33,7 +33,6 @@ jobs:
   pool:
     vmImage: 'vs2017-win2016'
   steps:
-  steps:
   # Linux
   - bash: |
       export IPADDR=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
