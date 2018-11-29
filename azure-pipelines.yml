@@ -9,12 +9,43 @@ jobs:
   pool:
     vmImage: 'macOS-10.13'
   steps:
-  - bash: export BUILD_NUMBER=$(git rev-parse --short HEAD) && echo The buld number is $BUILD_NUMBER
-    displayName: 'Set and get the BUILD_NUMBER'
+  # Linux
+  - bash: |
+      export IPADDR=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
+      echo ##vso[task.setvariable variable=IP_ADDR]$IPADDR
+    condition: eq( variables.Agent.OS, 'Linux' )
+  # macOS
+  - bash: |
+      export IPADDR=$(ifconfig | grep 'en0' -A3 | tail -n1 | awk '{print $2}')
+      echo ##vso[task.setvariable variable=IP_ADDR]$IPADDR
+    condition: eq( variables.Agent.OS, 'Darwin' )
+  # Windows
+  - powershell: |
+      Set-Variable -Name IPADDR -Value (Get-NetIPAddress | ?{ $_.AddressFamily -eq "IPv4" -and !($_.IPAddress -match "169") -and !($_.IPaddress -match "127") }).IPAddress
+      Write-Host ##vso[task.setvariable variable=IP_ADDR]$env:IPADDR
+    condition: eq( variables.Agent.OS, 'Windows_NT' )
+
+# now we use the value, no matter where we got it
+- script: |
+    echo The IP address is $(variables.IP_ADDR)
 
 - job: Windows
   pool:
     vmImage: 'vs2017-win2016'
   steps:
-  - powershell: $env:BUILD_NUMBER=$(git rev-parse --short HEAD) && echo The build number is $BUILD_NUMBER
-    displayName: 'Set and get the BUILD_NUMBER'
+  steps:
+  # Linux
+  - bash: |
+      export IPADDR=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
+      echo ##vso[task.setvariable variable=IP_ADDR]$IPADDR
+    condition: eq( variables.Agent.OS, 'Linux' )
+  # macOS
+  - bash: |
+      export IPADDR=$(ifconfig | grep 'en0' -A3 | tail -n1 | awk '{print $2}')
+      echo ##vso[task.setvariable variable=IP_ADDR]$IPADDR
+    condition: eq( variables.Agent.OS, 'Darwin' )
+  # Windows
+  - powershell: |
+      Set-Variable -Name IPADDR -Value (Get-NetIPAddress | ?{ $_.AddressFamily -eq "IPv4" -and !($_.IPAddress -match "169") -and !($_.IPaddress -match "127") }).IPAddress
+      Write-Host ##vso[task.setvariable variable=IP_ADDR]$env:IPADDR
+    condition: eq( variables.Agent.OS, 'Windows_NT' )
