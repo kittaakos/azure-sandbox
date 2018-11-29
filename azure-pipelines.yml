@@ -22,7 +22,8 @@ jobs:
     vmImage: 'vs2017-win2016'
   steps:
   - script: |
-      for /f %%i in ('git rev-parse --short HEAD') do set BUILD_NUMBER=%&i
+      git rev-parse --short HEAD > tmp.txt
+      set /p BUILD_NUMBER=< tmp.txt
       echo '##vso[task.setvariable variable=myVariable]%BUILD_NUMBER%'
       echo my variable is $(myVariable)
       echo my variable is %BUILD_NUMBER%
