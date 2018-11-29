@@ -12,10 +12,15 @@ jobs:
   - script: |
       export BUILD_NUMBER=$(git rev-parse --short HEAD)
       echo '##vso[task.setvariable variable=myVariable]$BUILD_NUMBER'
-      echo my variable is $(myVariable)
+      echo my variable is $(myVariable) [!!! This is empty here.]
       echo my variable is $BUILD_NUMBER
       mkdir -p dist/mac && cd dist/mac && echo "on mac" > mac-$(myVariable).txt && ls -al
     displayName: 'Dummy Build (macOS)'
+  - script: |
+      echo my variable is $(myVariable)
+      echo my variable is $BUILD_NUMBER
+      mkdir -p dist/mac && cd dist/mac && echo "on mac" > mac-$(myVariable).txt && ls -al
+    displayName: 'Dummy Build 2 (macOS)'
 
 - job: Windows
   pool:
