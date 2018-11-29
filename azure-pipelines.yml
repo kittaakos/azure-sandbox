@@ -9,24 +9,27 @@ jobs:
   pool:
     vmImage: 'macOS-10.13'
   steps:
-  - script: echo '##vso[task.setvariable variable=myVariable]$(git rev-parse --short HEAD)'
+  - script: export BUILD_NUMBER=$(git rev-parse --short HEAD)
+  - script: echo '##vso[task.setvariable variable=myVariable]$BUILD_NUMBER'
   - script: echo my variable is $(myVariable)
   - script: mkdir dist/mac && cd dist/mac && echo "on mac" > mac-$(myVariable).txt && ls -al
-
 
 - job: Windows
   pool:
     vmImage: 'vs2017-win2016'
   steps:
-  - script: echo '##vso[task.setvariable variable=myVariable]$(git rev-parse --short HEAD)'
+  - script: for /f %i in ('git rev-parse --short HEAD') do set BUILD_NUMBER=%i
+  - script: echo '##vso[task.setvariable variable=myVariable]%BUILD_NUMBER%'
   - script: echo my variable is $(myVariable)
+  - script: echo my variable is %BUILD_NUMBER%
   - script: mkdir dist/win && cd dist/win && echo "on windows" > win-$(myVariable).txt && dir
-
 
 - job: Linux
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
-  - script: echo '##vso[task.setvariable variable=myVariable]$(git rev-parse --short HEAD)'
+  - script: export BUILD_NUMBER=$(git rev-parse --short HEAD)
+  - script: echo '##vso[task.setvariable variable=myVariable]$BUILD_NUMBER'
   - script: echo my variable is $(myVariable)
+  - script: echo my variable is $BUILD_NUMBER
   - script: mkdir dist/linux && cd dist/linux && echo "on linux" > linux-$(myVariable).txt && ls -al
