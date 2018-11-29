@@ -9,31 +9,9 @@ jobs:
   pool:
     vmImage: 'macOS-10.13'
   steps:
-  # Linux
-  - bash: |
-      export IPADDR=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
-      echo "##vso[task.setvariable variable=IP_ADDR]$IPADDR"
-    condition: eq( variables['Agent.OS'], 'Linux' )
-    displayName: Get IP on Linux
-  # macOS
-  - bash: |
-      export IPADDR=$(ifconfig | grep 'en0' -A3 | tail -n1 | awk '{print $2}')
-      echo "##vso[task.setvariable variable=IP_ADDR]$IPADDR"
-    condition: eq( variables['Agent.OS'], 'Darwin' )
-    displayName: Get IP on macOS
-  # Windows
-  - powershell: |
-      Set-Variable -Name IPADDR -Value ((Get-NetIPAddress | ?{ $_.AddressFamily -eq "IPv4" -and !($_.IPAddress -match "169") -and !($_.IPaddress -match "127") } | Select-Object -First 1).IPAddress)
-      Write-Host "##vso[task.setvariable variable=IP_ADDR]$IPADDR"
-    condition: eq( variables['Agent.OS'], 'Windows_NT' )
-    displayName: Get IP on Windows
-
-  # now we use the value, no matter where we got it
-  - script: |
-      echo The IP address is $(IP_ADDR)
   - script: |
       export BUILD_NUMBER=$(git rev-parse --short HEAD)
-      echo '##vso[task.setvariable variable=myVariable]$BUILD_NUMBER'
+      echo "##vso[task.setvariable variable=myVariable]$BUILD_NUMBER"
       echo my variable is $(myVariable) [!!! This is empty here.]
       echo my variable is $BUILD_NUMBER
       mkdir -p dist/mac && cd dist/mac && echo "on mac" > mac-$(myVariable).txt && ls -al
@@ -48,32 +26,10 @@ jobs:
   pool:
     vmImage: 'vs2017-win2016'
   steps:
-  # Linux
-  - bash: |
-      export IPADDR=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
-      echo "##vso[task.setvariable variable=IP_ADDR]$IPADDR"
-    condition: eq( variables['Agent.OS'], 'Linux' )
-    displayName: Get IP on Linux
-  # macOS
-  - bash: |
-      export IPADDR=$(ifconfig | grep 'en0' -A3 | tail -n1 | awk '{print $2}')
-      echo "##vso[task.setvariable variable=IP_ADDR]$IPADDR"
-    condition: eq( variables['Agent.OS'], 'Darwin' )
-    displayName: Get IP on macOS
-  # Windows
-  - powershell: |
-      Set-Variable -Name IPADDR -Value ((Get-NetIPAddress | ?{ $_.AddressFamily -eq "IPv4" -and !($_.IPAddress -match "169") -and !($_.IPaddress -match "127") } | Select-Object -First 1).IPAddress)
-      Write-Host "##vso[task.setvariable variable=IP_ADDR]$IPADDR"
-    condition: eq( variables['Agent.OS'], 'Windows_NT' )
-    displayName: Get IP on Windows
-
-  # now we use the value, no matter where we got it
-  - script: |
-      echo The IP address is $(IP_ADDR)
   - script: |
       git rev-parse --short HEAD > tmp.txt
       set /p BUILD_NUMBER=< tmp.txt
-      echo '##vso[task.setvariable variable=myVariable]%BUILD_NUMBER%'
+      echo "##vso[task.setvariable variable=myVariable]%BUILD_NUMBER%"
       echo my variable is $(myVariable)
       echo my variable is %BUILD_NUMBER%
       mkdir dist\\win && cd dist\\win && echo "on windows" > win-$(myVariable).txt && dir
@@ -83,31 +39,9 @@ jobs:
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
-  # Linux
-  - bash: |
-      export IPADDR=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
-      echo "##vso[task.setvariable variable=IP_ADDR]$IPADDR"
-    condition: eq( variables['Agent.OS'], 'Linux' )
-    displayName: Get IP on Linux
-  # macOS
-  - bash: |
-      export IPADDR=$(ifconfig | grep 'en0' -A3 | tail -n1 | awk '{print $2}')
-      echo "##vso[task.setvariable variable=IP_ADDR]$IPADDR"
-    condition: eq( variables['Agent.OS'], 'Darwin' )
-    displayName: Get IP on macOS
-  # Windows
-  - powershell: |
-      Set-Variable -Name IPADDR -Value ((Get-NetIPAddress | ?{ $_.AddressFamily -eq "IPv4" -and !($_.IPAddress -match "169") -and !($_.IPaddress -match "127") } | Select-Object -First 1).IPAddress)
-      Write-Host "##vso[task.setvariable variable=IP_ADDR]$IPADDR"
-    condition: eq( variables['Agent.OS'], 'Windows_NT' )
-    displayName: Get IP on Windows
-
-  # now we use the value, no matter where we got it
-  - script: |
-      echo The IP address is $(IP_ADDR)
   - script: |
       export BUILD_NUMBER=$(git rev-parse --short HEAD)
-      echo '##vso[task.setvariable variable=myVariable]$BUILD_NUMBER'
+      echo "##vso[task.setvariable variable=myVariable]$BUILD_NUMBER"
       echo my variable is $(myVariable)
       echo my variable is $BUILD_NUMBER
       mkdir -p dist/linux && cd dist/linux && echo "on linux" > linux-$(myVariable).txt && ls -al
