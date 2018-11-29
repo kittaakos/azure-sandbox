@@ -8,38 +8,21 @@ jobs:
 - job: macOS
   pool:
     vmImage: 'macOS-10.13'
-  steps:
-  - script: |
-      export BUILD_NUMBER=$(git rev-parse --short HEAD)
-      echo "##vso[task.setvariable variable=myVariable]$BUILD_NUMBER"
-    displayName: Figure out the build number
-  - script: |
-      echo my variable is $(myVariable)  # now this will be set
-      echo my variable is $BUILD_NUMBER  # this one WON'T be set anymore, as we're in a new process
-      mkdir -p dist/mac && cd dist/mac && echo "on mac" > mac-$(myVariable).txt && ls -al
-    displayName: 'Dummy Build (macOS)'
 
-- job: Windows
-  pool:
-    vmImage: 'vs2017-win2016'
-  steps:
-  - script: |
-      git rev-parse --short HEAD > tmp.txt
-      set /p BUILD_NUMBER=< tmp.txt
-      echo '##vso[task.setvariable variable=myVariable]%BUILD_NUMBER%''
-      echo my variable is $(myVariable) [!!! This is still empty here.]
-      echo my variable is %BUILD_NUMBER%
-      mkdir dist\\win && cd dist\\win && echo "on windows" > win-$(myVariable).txt && dir
-    displayName: 'Dummy Build (Windows)'
+  variables:
+    aKey: 'aValue'
 
-- job: Linux
-  pool:
-    vmImage: 'ubuntu-16.04'
   steps:
-  - script: |
-      export BUILD_NUMBER=$(git rev-parse --short HEAD)
-      echo '##vso[task.setvariable variable=myVariable]$BUILD_NUMBER'
-      echo my variable is $(myVariable) [!!! This is still empty here.]
-      echo my variable is $BUILD_NUMBER
-      mkdir -p dist/linux && cd dist/linux && echo "on linux" > linux-$(myVariable).txt && ls -al
-    displayName: 'Dummy Build (Linux)'
+  - script: mkdir -p dist/mac && cd dist/mac && echo > empty-mac.txt && zip empty-mac-$(aKey).zip empty-mac.txt
+    displayName: 'Dummy Build - Let assume this is a blackbox and it always produces a ZIP.'
+  - task: ExtractFiles@1
+    inputs:
+      archiveFilePatterns: 'dist/mac/*.zip' 
+      destinationFolder: dist/mac/empty-mac-$(aKey)
+      cleanDestinationFolder: true 
+    displayName: 'Unzipping Build Artifact - Workaround for https://github.com/Microsoft/azure-pipelines-agent/issues/1986'
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: dist/mac/empty-mac-$(aKey)
+      artifactName: 'empty-mac'
+    displayName: 'Publis Build'
