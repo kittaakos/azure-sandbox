@@ -2,6 +2,8 @@ pool: hosted ubuntu 1604
 variables:
    someVar: true
 steps:
+- script: echo $(someVar)
+  displayName: echo someVar is $(someVar)
 - ${{ if ne(variables['someVar'], '') }}:
    - template: mytemplate.yml
 - script: echo hi
