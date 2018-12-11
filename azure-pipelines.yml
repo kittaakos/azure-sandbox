@@ -1,15 +1,7 @@
 pool: hosted ubuntu 1604
 variables:
    someVar: true
-   otherVar: true
 steps:
-- script: echo someVar/otherVar $(someVar) $(otherVar)
-  displayName: 'Print Variables Script'
-- ${{ if ne(variables['otherVar'], '') }}:
-   - template: mytemplate.yml
 - ${{ if ne(variables['someVar'], '') }}:
    - template: mytemplate.yml
-- ${{ if or(ne(variables['someVar'], ''), ne(variables['otherVar'], '')) }}:
-   - template: mytemplate.yml
 - script: echo hi
-  displayName: 'Echo Script'
