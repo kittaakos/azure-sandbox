@@ -3,7 +3,7 @@ variables:
    someVar: true
    BR: $(Build.Reason)
 steps:
-- ${{ if ne(variables['someVar'], '') }}:
+- ${{ if ne(variables['someVar'], 'true') }}:
    - template: mytemplate.yml
 - script: echo hi
 - script: echo the BR is $BR
