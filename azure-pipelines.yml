@@ -2,6 +2,6 @@ pool: hosted ubuntu 1604
 variables:
    BR: $(Build.Reason)
 steps:
-- ${{ if in(variables['BR'], 'Manual', 'Schedule')) }}:
+- ${{ if in(variables['BR'], 'Schedule')) }}:
    - template: mytemplate.yml
 - script: echo hi
