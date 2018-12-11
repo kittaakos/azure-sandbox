@@ -1,36 +1,3 @@
-# trigger:
-#   batch: true
-#   branches:
-#     include:
-#     - master
-
-# jobs:
-# - job: macOS
-#   pool:
-#     vmImage: 'macOS-10.13'
-
-#   steps:
-
-#   - script: |
-#       export BUILD_NUMBER=$(git rev-parse --short HEAD)
-#       echo "##vso[task.setvariable variable=myVariable]$BUILD_NUMBER"
-#     displayName: Figure out the build number
-#   - script: echo my variable is $(myVariable) && mkdir -p dist/mac && cd dist/mac && echo > empty-mac.txt && zip empty-mac-0.0.0.$(myVariable).zip empty-mac.txt
-#     displayName: 'Dummy Build - Let assume this is a blackbox and it always produces a ZIP.'
-#   - task: ExtractFiles@1
-#     inputs:
-#       archiveFilePatterns: 'dist/mac/*.zip' 
-#       destinationFolder: dist/mac/empty-mac-0.0.0.$(myVariable)
-#       cleanDestinationFolder: true 
-#     displayName: 'Unzipping Build Artifact - Workaround for https://github.com/Microsoft/azure-pipelines-agent/issues/1986'
-#   - task: PublishBuildArtifacts@1
-#     inputs:
-#       pathtoPublish: dist/mac/empty-mac-0.0.0.$(myVariable)
-#       artifactName: 'empty-mac-0.0.0.$(myVariable)'
-#     displayName: 'Publis Build'
-
-# Conditions for the templates
-# https://github.com/Microsoft/azure-pipelines-yaml/issues/30
 pool: hosted ubuntu 1604
 variables:
    someVar: true
