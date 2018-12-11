@@ -4,6 +4,8 @@ variables:
 steps:
 - script: echo $(someVar)
   displayName: echo someVar is $(someVar)
+- script: echo I am a conditional script.
+  condition: ne(variables['someVar'], '')
 - ${{ if ne(variables['someVar'], '') }}:
    - template: mytemplate.yml
 - script: echo hi
