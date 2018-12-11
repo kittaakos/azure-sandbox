@@ -11,3 +11,4 @@ steps:
 - ${{ if or(ne(variables['someVar'], ''), ne(variables['otherVar'], '')) }}:
    - template: mytemplate.yml
 - script: echo hi
+  displayName: 'Echo Script'
