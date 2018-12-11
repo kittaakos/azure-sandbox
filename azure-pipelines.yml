@@ -1,20 +1,24 @@
-pool: hosted ubuntu 1604
-variables:
-   someVar: true
-steps:
-- script: echo someVar is $(someVar)
-  displayName: 'Check someVar Script'
+jobs:
+- job: rolling_macOS
+  displayName: 'Rolling Build (macOS)'
+  pool:
+    vmImage: 'macOS-10.13'
+  condition: and(ne(variables['Build.Reason'], 'Manual'), ne(variables['Build.Reason'], 'Schedule'))
+  steps:
+    - template: rolling-build-steps.yml
 
-- script: 'echo someVar is $(someVar) in a conditional script'
-  condition: ne(variables['someVar'], '')
-  displayName: 'Conditional Script (Should run)'
+- job: release_macOS
+  displayName: 'Release Build (macOS)'
+  pool:
+    vmImage: 'macOS-10.13'
+  condition: or(eq(variables['Build.Reason'], 'Manual'), eq(variables['Build.Reason'], 'Schedule'))
+  steps:
+    - template: release-build-steps.yml
 
-- script: 'echo someVar is $(someVar) in a conditional script'
-  condition: eq(variables['someVar'], '')
-  displayName: 'Conditional Script (Should NOT run)'
-
-- ${{ if ne(variables['someVar'], '') }}:
-   - template: mytemplate.yml
-
-- script: echo hi
-  displayName: 'Always Run Script'
+- job: release_windows
+  displayName: 'Release Build (Windows)'
+  pool:
+    vmImage: 'vs2017-win2016'
+  condition: or(eq(variables['Build.Reason'], 'Manual'), eq(variables['Build.Reason'], 'Schedule'))
+  steps:
+    - template: release-build-steps.yml
