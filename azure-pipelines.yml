@@ -2,10 +2,12 @@ pool: hosted ubuntu 1604
 variables:
    someVar: 'some'
    otherVar: 'other'
-   BR: $(Build.Reason)
 steps:
 - script: echo someVar/otherVar $(someVar) $(otherVar)
+- ${{ if ne(variables['otherVar'], '') }}:
+   - template: mytemplate.yml
+- ${{ if ne(variables['someVar'], '') }}:
+   - template: mytemplate.yml
 - ${{ if or(ne(variables['someVar'], ''), ne(variables['otherVar'], '')) }}:
    - template: mytemplate.yml
 - script: echo hi
-- script: echo the BR is $BR
