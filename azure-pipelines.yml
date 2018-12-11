@@ -35,6 +35,6 @@ pool: hosted ubuntu 1604
 variables:
    someVar: true
 steps:
-- ${{ if ne(variables['someVar'], '') }}:
+- ${{ if in(variables['Build.Reason'], 'Manual', 'Schedule')) }}:
    - template: mytemplate.yml
 - script: echo hi
