@@ -3,7 +3,7 @@ jobs:
   displayName: 'Rolling Build (macOS)'
   pool:
     vmImage: 'macOS-10.13'
-  condition: notIn(variables['Build.Reason'], 'Manual', 'Schedule'))
+  condition: notIn(variables['Build.Reason'], 'Manual', 'Schedule')
   steps:
     - template: rolling-build-steps.yml
 
@@ -11,7 +11,7 @@ jobs:
   displayName: 'Release Build (macOS)'
   pool:
     vmImage: 'macOS-10.13'
-  condition: in(variables['Build.Reason'], 'Manual', 'Schedule'))
+  condition: in(variables['Build.Reason'], 'Manual', 'Schedule')
   steps:
     - template: release-build-steps.yml
 
@@ -19,6 +19,6 @@ jobs:
   displayName: 'Release Build (Windows)'
   pool:
     vmImage: 'vs2017-win2016'
-  condition: in(variables['Build.Reason'], 'Manual', 'Schedule'))
+  condition: in(variables['Build.Reason'], 'Manual', 'Schedule')
   steps:
     - template: release-build-steps.yml
