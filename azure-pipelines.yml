@@ -4,10 +4,17 @@ variables:
 steps:
 - script: echo someVar is $(someVar)
   displayName: 'Check someVar Script'
+
 - script: 'echo someVar is $(someVar) in a conditional script'
   condition: ne(variables['someVar'], '')
-  displayName: 'Conditional Script'
+  displayName: 'Conditional Script (Should run)'
+
+- script: 'echo someVar is $(someVar) in a conditional script'
+  condition: eq(variables['someVar'], '')
+  displayName: 'Conditional Script (Should NOT run)'
+
 - ${{ if ne(variables['someVar'], '') }}:
    - template: mytemplate.yml
+
 - script: echo hi
   displayName: 'Always Run Script'
