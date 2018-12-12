@@ -11,8 +11,7 @@ jobs:
       pathtoPublish: dist/my-release.zip
       artifactName: 'my-release.zip'
     displayName: 'Publish Release'
-  - 
-  task: GithubRelease@0
+  - task: GithubRelease@0
     inputs:
       gitHubConnection: kittaakos
       repositoryName: kittaakos/azure-sandbox
