@@ -11,7 +11,7 @@ steps:
     gitHubConnection: kittaakos
     repositoryName: kittaakos/azure-sandbox
     action: 'create' # Options: create, edit, discard
-    target: '$(build.sourceVersion)' # Required when action == create || action == edit
+    target: 'v0.0.1' # Required when action == create || action == edit
     tagSource: 'auto' # Required when action == create. Options: auto, manual
     #tag: # Required when action == edit || action == discard || tagSource == manual
     #title: # Optional
