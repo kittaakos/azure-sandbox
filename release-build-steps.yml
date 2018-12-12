@@ -6,12 +6,10 @@ steps:
     pathtoPublish: dist/my-release.zip
     artifactName: 'my-release.zip'
   displayName: 'Publish Release'
-# GitHub Release
-# Create, edit, or discard a GitHub release.
 - task: GithubRelease@0
   inputs:
     gitHubConnection: kittaakos
-    repositoryName: azure-sandbox
+    repositoryName: kittaakos/azure-sandbox
     action: 'create' # Options: create, edit, discard
     target: '$(build.sourceVersion)' # Required when action == create || action == edit
     tagSource: 'auto' # Required when action == create. Options: auto, manual
