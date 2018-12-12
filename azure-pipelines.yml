@@ -1,24 +1,26 @@
 jobs:
-- job: rolling_macOS
-  displayName: 'Rolling Build (macOS)'
-  pool:
-    vmImage: 'macOS-10.13'
-  condition: notIn(variables['Build.Reason'], 'Manual', 'Schedule')
-  steps:
-    - template: rolling-build-steps.yml
-
 - job: release_macOS
   displayName: 'Release Build (macOS)'
   pool:
     vmImage: 'macOS-10.13'
-  condition: in(variables['Build.Reason'], 'Manual', 'Schedule')
   steps:
-    - template: release-build-steps.yml
-
-# - job: release_windows
-#   displayName: 'Release Build (Windows)'
-#   pool:
-#     vmImage: 'vs2017-win2016'
-#   condition: in(variables['Build.Reason'], 'Manual', 'Schedule')
-#   steps:
-#     - template: release-build-steps.yml
+  - script: rm -rf dist && mkdir dist && echo `date` > dist/my-release.txt && zip -9 -jr ./dist/my-release.zip ./dist/my-release.txt
+    displayName: 'Create Release'
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: dist/my-release.zip
+      artifactName: 'my-release.zip'
+    displayName: 'Publish Release'
+  - 
+  task: GithubRelease@0
+    inputs:
+      gitHubConnection: kittaakos
+      repositoryName: kittaakos/azure-sandbox
+      assets: $(build.artifactstagingdirectory)/*.zip
+      action: 'create'
+      target: '$(build.sourceVersion)'
+      tagSource: 'auto'
+      #tag: # Required when action == edit || action == discard || tagSource == manual
+      title: 'Tag Title'
+      assetUploadMode: 'delete'
+      isDraft: true
