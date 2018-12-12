@@ -10,7 +10,7 @@ steps:
 # Create, edit, or discard a GitHub release.
 - task: GithubRelease@0
   inputs:
-    gitHubConnection: GH_TOKEN
+    gitHubConnection: GH-personal-access-token
     repositoryName: azure-sandbox
     action: 'create' # Options: create, edit, discard
     target: '$(build.sourceVersion)' # Required when action == create || action == edit
