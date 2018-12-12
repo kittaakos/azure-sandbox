@@ -15,10 +15,10 @@ jobs:
   steps:
     - template: release-build-steps.yml
 
-- job: release_windows
-  displayName: 'Release Build (Windows)'
-  pool:
-    vmImage: 'vs2017-win2016'
-  condition: in(variables['Build.Reason'], 'Manual', 'Schedule')
-  steps:
-    - template: release-build-steps.yml
+# - job: release_windows
+#   displayName: 'Release Build (Windows)'
+#   pool:
+#     vmImage: 'vs2017-win2016'
+#   condition: in(variables['Build.Reason'], 'Manual', 'Schedule')
+#   steps:
+#     - template: release-build-steps.yml
