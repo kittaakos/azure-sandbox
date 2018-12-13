@@ -16,10 +16,10 @@ jobs:
       gitHubConnection: kittaakos
       repositoryName: "kittaakos/azure-sandbox"
       assets: $(build.artifactstagingdirectory)/*.zip
-      action: 'create'
+      action: Create
       target: '$(build.sourceVersion)'
       tagSource: 'auto'
-      tag: 'v0.0.1'
+      #tag: # Required when action == edit || action == discard || tagSource == manual
       title: 'Tag Title'
       assetUploadMode: 'delete'
       isDraft: true
