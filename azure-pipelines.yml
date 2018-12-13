@@ -19,7 +19,7 @@ jobs:
       action: Create
       target: '$(build.sourceVersion)'
       tagSource: 'auto'
-      #tag: # Required when action == edit || action == discard || tagSource == manual
+      tag: 'v0.0.1'
       title: 'Tag Title'
       assetUploadMode: 'delete'
       isDraft: true
