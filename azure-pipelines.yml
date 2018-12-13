@@ -17,6 +17,7 @@ jobs:
       repositoryName: kittaakos/azure-sandbox
       assets: $(build.artifactstagingdirectory)/*.zip
       target: '$(build.sourceVersion)'
+      action: Edit
       tagSource: 'auto'
       tag: 'v0.0.1'
       title: 'Tag Title'
