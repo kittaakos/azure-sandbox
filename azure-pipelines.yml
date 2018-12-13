@@ -16,7 +16,6 @@ jobs:
       gitHubConnection: kittaakos
       repositoryName: "kittaakos/azure-sandbox"
       assets: $(build.artifactstagingdirectory)/*.zip
-      action: Create
       target: '$(build.sourceVersion)'
       tagSource: 'auto'
       tag: 'v0.0.1'
