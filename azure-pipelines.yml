@@ -15,12 +15,11 @@ jobs:
     inputs:
       gitHubConnection: kittaakos
       repositoryName: kittaakos/azure-sandbox
-      assets: $(build.artifactstagingdirectory)/*.zip
+      assets: dist/my-release.zip
       target: '$(build.sourceVersion)'
       action: Edit
       tagSource: 'auto'
-      tag: 'v0.0.1'
-      title: 'Tag Title'
+      tag: 'v0.0.2'
       assetUploadMode: 'delete'
       isDraft: true
       addChangeLog: true
