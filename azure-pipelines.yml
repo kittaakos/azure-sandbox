@@ -11,15 +11,3 @@ jobs:
       pathtoPublish: dist/my-release.zip
       artifactName: 'my-release.zip'
     displayName: 'Publish Release'
-  # - task: GithubRelease@0
-  #   inputs:
-  #     gitHubConnection: kittaakos
-  #     repositoryName: kittaakos/azure-sandbox
-  #     assets: dist/my-release.zip
-  #     target: '$(build.sourceVersion)'
-  #     action: Edit
-  #     tagSource: 'auto'
-  #     tag: 'v0.0.2'
-  #     assetUploadMode: 'delete'
-  #     isDraft: true
-  #     addChangeLog: true
