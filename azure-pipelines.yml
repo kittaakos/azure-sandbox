@@ -13,8 +13,8 @@ jobs:
       gitHubConnection: kittaakos
       repositoryName: kittaakos/azure-sandbox
       assets:
-      - dist/my-release.zip
-      - dist/my-release2.zip
+        dist/my-release.zip
+        dist/my-release2.zip
       target: $(Build.SourceVersion)
       action: Edit
       tagSource: auto
