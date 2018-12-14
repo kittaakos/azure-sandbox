@@ -13,4 +13,4 @@ jobs:
       pathtoPublish: dist/my-release.zip
       artifactName: 'my-release.zip'
     displayName: 'Publish Release'
-    condition: and(in(variables['Build.Reason'], 'Manual', 'Schedule'), ne(variabled['Release.Tag'], ''))
+    condition: and(in(variables['Build.Reason'], 'Manual', 'Schedule'), ne(variables['Release.Tag'], ''))
