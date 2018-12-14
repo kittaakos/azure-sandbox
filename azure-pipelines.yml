@@ -19,5 +19,5 @@ jobs:
       tag: $(Release.Tag)
       assetUploadMode: delete
       isDraft: ne(variables['Release.IsDraft'], false)
-      addChangeLog: true
+      addChangeLog: ne(variables['Release.AddChangeLog'], false)
     condition: and(in(variables['Build.Reason'], 'Manual', 'Schedule'), ne(variables['Release.Tag'], ''))
