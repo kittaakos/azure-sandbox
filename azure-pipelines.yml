@@ -12,7 +12,7 @@ jobs:
     inputs:
       gitHubConnection: kittaakos
       repositoryName: kittaakos/azure-sandbox
-      assets:
+      assets: |
         dist/my-release.zip
         dist/my-release2.zip
       target: $(Build.SourceVersion)
