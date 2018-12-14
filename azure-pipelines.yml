@@ -4,7 +4,7 @@ jobs:
   pool:
     vmImage: 'macOS-10.13'
   steps:
-  - script: rm -rf dist && mkdir dist && echo `date` > dist/my-release.txt && zip -jr ./dist/my-release.zip ./dist/my-release.txt
+  - script: rm -rf dist && mkdir dist && echo `date` > dist/my-release.txt && zip -jr ./dist/my-release.zip ./dist/my-release.txt && echo `date` > dist/my-release2.txt && zip -jr ./dist/my-release2.zip ./dist/my-release2.txt
     displayName: 'Create Release'
   - script: echo $(Release.Tag)
     displayName: 'Create Release'
@@ -12,7 +12,9 @@ jobs:
     inputs:
       gitHubConnection: kittaakos
       repositoryName: kittaakos/azure-sandbox
-      assets: dist/my-release.zip
+      assets:
+      - dist/my-release.zip
+      - dist/my-release2.zip
       target: $(Build.SourceVersion)
       action: Edit
       tagSource: auto
