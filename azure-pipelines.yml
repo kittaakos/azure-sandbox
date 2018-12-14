@@ -22,4 +22,4 @@ jobs:
       assetUploadMode: delete
       isDraft: notIn(variables['Release.IsDraft'], 'false')
       addChangeLog: notIn(variables['Release.AddChangeLog'], 'false')
-    condition: and(in(variables['Build.Reason'], 'Manual', 'Schedule'), ne(variables['Release.Tag'], ''))
+    condition: and(in(variables['Build.Reason'], 'Manual', 'Schedule'), and(ne(variables['Release.Tag'], ''), startsWith(variabled['Release.Tag'], 'v')))
