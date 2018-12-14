@@ -8,11 +8,11 @@ jobs:
     displayName: 'Create Release'
   - script: echo $(Release.Tag)
     displayName: 'Create Release'
-  - script: echo $(Release.IsDraft)
+  - script: echo value1 $(Release.IsDraft)
     displayName: 'Check Release.IsDraft'
-  - script: echo $(Release.IsDraft)
+  - script: echo value2 $(Release.IsDraft)
     displayName: 'Check Release.IsDraft 2'
-    condition: notIn(variables['Release.IsDraft'], 'false')
+    condition: and(ne(variables['Release.IsDraft'], ''), notIn(variables['Release.IsDraft'], 'false'))
   - task: GithubRelease@0
     inputs:
       gitHubConnection: kittaakos
