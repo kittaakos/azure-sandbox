@@ -6,8 +6,11 @@ jobs:
   steps:
   - script: rm -rf dist && mkdir dist && echo `date` > dist/my-release.txt && zip -jr ./dist/my-release.zip ./dist/my-release.txt
     displayName: 'Create Release'
+  - script: echo $(Release.Tag)
+    displayName: 'Create Release'
   - task: PublishBuildArtifacts@1
     inputs:
       pathtoPublish: dist/my-release.zip
       artifactName: 'my-release.zip'
     displayName: 'Publish Release'
+    condition: and(in(variables['Build.Reason'], 'Manual', 'Schedule'), ne(variabled['Release.Tag'], ''))
