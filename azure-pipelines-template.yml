@@ -1,0 +1,19 @@
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '8.x'
+  displayName: 'Install - Node.js 8.x'
+
+- script: rm -rf dist && mkdir dist && echo `date` > dist/name-FINGERPRINT.dmg
+  displayName: 'Create Release (macOS)'
+  condition: eq(variables['agent.os'], 'Darwin')
+
+- script: rm -rf dist && mkdir dist && echo `date` > dist/one.txt && echo `date` > dist/two.txt && zip -rj dist/name-FINGERPRINT.zip dist/one.txt dist/two.txt
+  displayName: 'Create Release (Linux)'
+  condition: eq(variables['agent.os'], 'Linux')
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: dist/name-
+    artifactName: 'release'
+  displayName: 'Publish - Build Artifacts'

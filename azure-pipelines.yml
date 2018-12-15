@@ -1,30 +1,43 @@
 jobs:
-- job: release_macOS
+- job: release_macos
   displayName: 'Release Build (macOS)'
   pool:
     vmImage: 'macOS-10.13'
   steps:
-  - script: rm -rf dist && mkdir dist && echo `date` > dist/my-release.txt && zip -jr ./dist/my-release.zip ./dist/my-release.txt && echo `date` > dist/my-release2.txt && zip -jr ./dist/my-release2.zip ./dist/my-release2.txt
-    displayName: 'Create Release'
-  - script: echo $(Release.Tag)
-    displayName: 'Create Release'
-  - script: echo value1 $(Release.IsDraft)
-    displayName: 'Check Release.IsDraft'
-  - script: echo value2 $(Release.IsDraft)
-    displayName: 'Check Release.IsDraft 2'
-    condition: and(ne(variables['Release.IsDraft'], ''), notIn(variables['Release.IsDraft'], 'false'))
-  - task: GithubRelease@0
-    inputs:
-      gitHubConnection: kittaakos
-      repositoryName: kittaakos/azure-sandbox
-      assets: |
-        dist/my-release.zip
-        dist/my-release2.zip
-      target: $(Build.SourceVersion)
-      action: Edit
-      tagSource: auto
-      tag: $(Release.Tag)
-      assetUploadMode: delete
-      isDraft: notIn(variables['Release.IsDraft'], 'false')
-      addChangeLog: notIn(variables['Release.AddChangeLog'], 'false')
-    condition: and(in(variables['Build.Reason'], 'Manual', 'Schedule'), startsWith(variables['Release.Tag'], 'v'))
+    - template: azure-pipelines-template.yml
+
+- job: release_windows
+  displayName: 'Release Build (Linux)'
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+    - template: azure-pipelines-template.yml
+
+- job: gh_release_linux
+  displayName: 'GitHub Release Build (Windows)'
+  pool:
+    vmImage: 'vs2017-win2016'
+  steps:
+    - template: azure-pipelines-template.yml
+  dependsOn:
+    - release_macos
+    - release_windows
+  condition: and(succeeded(), startsWith(variables['Release.Tag'], 'v'))
+  steps:
+    - task: DownloadBuildArtifacts@0
+      displayName: Download Release Artifacts
+    - task: GithubRelease@0
+      inputs:
+        gitHubConnection: kittaakos
+        repositoryName: kittaakos/azure-sandbox
+        assets: |
+          dist/name-*.zip
+          dist/name-*.dmg
+        target: $(Build.SourceVersion)
+        action: Edit
+        tagSource: auto
+        tag: $(Release.Tag)
+        assetUploadMode: delete
+        isDraft: true
+        addChangeLog: true
+      displayName: 'Create GitHub Release'
