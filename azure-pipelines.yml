@@ -17,8 +17,6 @@ jobs:
   displayName: 'GitHub Release Build (Windows)'
   pool:
     vmImage: 'vs2017-win2016'
-  steps:
-    - template: azure-pipelines-template.yml
   dependsOn:
     - release_macos
     - release_windows
