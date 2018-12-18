@@ -27,6 +27,8 @@ jobs:
       inputs:
         artifactName: 'folder with space'
         downloadPath: 'gh-release'
+    - script: echo $(Release.AddChangeLog)
+      condition: eq(variables['Release.AddChangeLog'], 'true')
     - task: GithubRelease@0
       inputs:
         gitHubConnection: kittaakos
