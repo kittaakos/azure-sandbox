@@ -15,5 +15,5 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: dist
-    artifactName: 'release with space'
+    artifactName: 'folder'
   displayName: 'Publish - Build Artifacts'

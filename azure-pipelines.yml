@@ -24,18 +24,15 @@ jobs:
     - task: DownloadBuildArtifacts@0
       displayName: Download Release Artifacts
       inputs:
-        artifactName: 'release with space'
+        artifactName: 'folder'
         downloadPath: 'gh-release'
-    - bash: pwd && ls -al
-    - bash: cd gh-release && pwd && ls -al
-    - bash: cd gh-release/release\ with\ space/ && pwd && ls -al
     - task: GithubRelease@0
       inputs:
         gitHubConnection: kittaakos
         repositoryName: kittaakos/azure-sandbox
         assets: |
-          "gh-release/release with space/name-*.zip"
-          "gh-release/release with space/name-*.dmg"
+          gh-release/folder/name-*.zip
+          gh-release/folder/name-*.dmg
         target: $(Build.SourceVersion)
         action: Edit
         tagSource: auto
