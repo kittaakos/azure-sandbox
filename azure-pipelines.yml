@@ -29,6 +29,7 @@ jobs:
         downloadPath: 'gh-release'
     - bash: pwd && ls -al
     - bash: cd gh-release && ls -al
+    - bash: cd gh-release/release && ls -al
     - task: GithubRelease@0
       inputs:
         gitHubConnection: kittaakos
