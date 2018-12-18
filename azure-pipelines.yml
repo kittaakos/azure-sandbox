@@ -26,7 +26,9 @@ jobs:
       displayName: Download Release Artifacts
       inputs:
         artifactName: 'release'
-        downloadPath: 'gh-release' 
+        downloadPath: 'gh-release'
+    - bash: pwd && ls -al
+    - bash: cd gh-release && ls -al
     - task: GithubRelease@0
       inputs:
         gitHubConnection: kittaakos
