@@ -20,15 +20,13 @@ jobs:
   dependsOn:
     - release_macos
     - release_windows
+  condition: and(succeeded(), startsWith(variables['Release.Tag'], 'v'))
   steps:
     - task: DownloadBuildArtifacts@0
       displayName: Download Release Artifacts
       inputs:
         artifactName: 'folder with space'
         downloadPath: 'gh-release'
-    - bash: pwd && ls -al
-    - bash: cd gh-release && pwd && ls -al
-    - bash: cd gh-release/folder\ with\ space/ && pwd && ls -al
     - task: GithubRelease@0
       inputs:
         gitHubConnection: kittaakos
@@ -39,8 +37,8 @@ jobs:
         target: $(Build.SourceVersion)
         action: Edit
         tagSource: auto
-        tag: 'v1.1.1'
+        tag: $(Release.Tag)
         assetUploadMode: delete
-        isDraft: true
-        addChangeLog: true
+        isDraft: ne(variables['Release.IsDraft'], 'false')
+        addChangeLog: eq(variables['Release.AddChangeLog'], 'true')
       displayName: 'Create GitHub Release'
