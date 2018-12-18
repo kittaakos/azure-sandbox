@@ -32,8 +32,8 @@ jobs:
         gitHubConnection: kittaakos
         repositoryName: kittaakos/azure-sandbox
         assets: |
-          'gh-release/release with space/name-*.zip'
-          'gh-release/release with space/name-*.dmg'
+          "gh-release/release with space/name-*.zip"
+          "gh-release/release with space/name-*.dmg"
         target: $(Build.SourceVersion)
         action: Edit
         tagSource: auto
