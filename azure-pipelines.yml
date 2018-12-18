@@ -20,13 +20,14 @@ jobs:
   dependsOn:
     - release_macos
     - release_windows
-  condition: and(succeeded(), startsWith(variables['Release.Tag'], 'v'))
   steps:
     - task: DownloadBuildArtifacts@0
       displayName: Download Release Artifacts
       inputs:
         artifactName: 'release with space'
         downloadPath: 'gh-release'
+    - bash: pwd && ls -al
+    - bash: cd gh-release && pwd && ls -al
     - task: GithubRelease@0
       inputs:
         gitHubConnection: kittaakos
@@ -37,7 +38,7 @@ jobs:
         target: $(Build.SourceVersion)
         action: Edit
         tagSource: auto
-        tag: $(Release.Tag)
+        tag: 'v1.1.1'
         assetUploadMode: delete
         isDraft: true
         addChangeLog: true
