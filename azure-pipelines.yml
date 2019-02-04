@@ -5,52 +5,11 @@ jobs:
     # vmImage: 'macOS-10.13'
     vmImage: 'ubuntu-16.04'
     steps:
-      - bash: echo '##vso[task.setvariable variable=Version;isOutput=true]$(Build.BuildNumber)'
-        condition: eq(variables['Build.SourceBranchName'], 'master')
-        displayName: 'if master branch Version=1.0.x'
-      - bash: echo '##vso[task.setvariable variable=Version;isOutput=true]$(Build.BuildNumber)-$(Build.SourceBranchName)'
-        condition: ne(variables['Build.SourceBranchName'], 'master')
-        displayName: 'if not master branch Version=1.0.x-branch'
-      - bash: echo $(Version)
-        displayName: 'echo version'
-#   steps:
-#     - template: azure-pipelines-template.yml
-
-# - job: release_windows
-#   displayName: 'Release Build (Linux)'
-#   pool:
-#     vmImage: 'ubuntu-16.04'
-#   steps:
-#     - template: azure-pipelines-template.yml
-
-# - job: gh_release_linux
-#   displayName: 'GitHub Release Build (Windows)'
-#   pool:
-#     vmImage: 'vs2017-win2016'
-#   dependsOn:
-#     - release_macos
-#     - release_windows
-#   condition: and(succeeded(), startsWith(variables['Release.Tag'], 'v'))
-#   steps:
-#     - task: DownloadBuildArtifacts@0
-#       displayName: Download Release Artifacts
-#       inputs:
-#         artifactName: 'folder with space'
-#         downloadPath: 'gh-release'
-#     - script: echo $(Release.AddChangeLog)
-#       condition: eq(variables['Release.AddChangeLog'], 'true')
-#     - task: GithubRelease@0
-#       inputs:
-#         gitHubConnection: kittaakos
-#         repositoryName: kittaakos/azure-sandbox
-#         assets: |
-#           gh-release/folder with space/name-*.zip
-#           gh-release/folder with space/name-*.dmg
-#         target: $(Build.SourceVersion)
-#         action: Edit
-#         tagSource: auto
-#         tag: $(Release.Tag)
-#         assetUploadMode: delete
-#         isDraft: ne(variables['Release.IsDraft'], 'false')
-#         addChangeLog: eq(variables['Release.AddChangeLog'], 'true')
-#       displayName: 'Create GitHub Release'
+    - bash: echo '##vso[task.setvariable variable=Version;isOutput=true]$(Build.BuildNumber)'
+      #   condition: eq(variables['Build.SourceBranchName'], 'master')
+      #   displayName: 'if master branch Version=1.0.x'
+      # - bash: echo '##vso[task.setvariable variable=Version;isOutput=true]$(Build.BuildNumber)-$(Build.SourceBranchName)'
+      #   condition: ne(variables['Build.SourceBranchName'], 'master')
+      #   displayName: 'if not master branch Version=1.0.x-branch'
+      # - bash: echo $(Version)
+      #   displayName: 'echo version'
